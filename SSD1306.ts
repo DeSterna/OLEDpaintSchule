@@ -571,7 +571,6 @@ namespace oled {
     //% imageLiteralColumns=22
     //% imageLiteralRows=6
     //% shim=images::createImage
-    //% weight=90
     //% subcategory=paint
     export function matrix22x6(i: string): Image {
         const im = <Image><any>i;
