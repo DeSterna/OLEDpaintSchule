@@ -923,7 +923,7 @@ export function drawsegment (seg:string, pos: number) {
 
 
     /**
-     * Turn display on and off. The information on the screen will be kept when display when turning on and off
+     * Schalte den Bildschirm an und aus. Die Informationen auf den Bildschirm bleiben beim Ein- und Ausschalten erhalten
      * @param output is the boolean output of the pin, either ON or OFF
      * @param screen is screen selection when using multiple screens
      */
