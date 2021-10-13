@@ -248,8 +248,8 @@ namespace oled {
     }
 
     /**
-     * Setup of display ready for using
-     * @param screen is the selection of which screen to initialise
+     * Bereit den Bildschirm zur Nutzung vor.
+     * @param screen ist die Auswahl, welcher Bildschirm initalisiert werden soll.
      */
     export function initDisplay(screen?: number): void {
         
@@ -321,11 +321,11 @@ namespace oled {
     `)
 
 
-   //% blockId=zeigeZahl block="show 7-segment number %num"
+   //% blockId=showNumber block="show 7-segment number %num"
    //% block.loc.de="zeige 7-Segment Zahl %num"
    //% group="Zeige"
    //% weight=91
-    export function zeigeZahl (num:number) {
+    export function showNumber (num:number) {
         let zahlAlsText = ""
         screenBuf.fill(0)       //Puffer löschen
         screenBuf[0] = 0x40 
@@ -351,7 +351,7 @@ namespace oled {
 
 //% blockId=drawSegment block="paint segment %seg at position %pos"
 //% block.loc.de="zeichne Segment %seg an Position %pos"
-//% subcategory=advanced
+//% subcategory=Weitere
 export function drawsegment (seg:string, pos: number) {
         switch (seg) {
             case "A": {
@@ -387,7 +387,7 @@ export function drawsegment (seg:string, pos: number) {
 
     //% blockId=drawnum block="paint number %num at position %pos"
     //% block.loc.de="zeichne Ziffer %num an Position %pos"
-    //% subcategory=advanced
+    //% subcategory=Weitere
     export function drawnum (num:number, pos: number) {
         switch (pos) {
             case 0: {
@@ -557,8 +557,11 @@ export function drawsegment (seg:string, pos: number) {
     }
 
     /**
-     * Writes the matrix into the buffer
-     * Use "refresh" to show matrix on display
+     * Schreibt eine Matrix in den Zwischenspeicher.
+     * Nutze "refresh" um die Matrix auf dem Bildschirm zu zeigen.
+     * @param im ist eine Matrix.
+     * @param xpos ist die Position in x-Richtung.
+     * @param ypos ist die Position in y-Richtung.
      */
     //% block="write matrix %im|x %xpos|y %ypos"
     //% block.loc.de="schreibe Matrix %im|x %xpos|y %ypos"
@@ -575,8 +578,11 @@ export function drawsegment (seg:string, pos: number) {
   }
 
     /**
-     * Writes the matrix double sized into the buffer
-     * Use "refresh" to show matrix on display
+     * Schreibt die Matrix in doppelter Größee in den Zwischenspeicher.
+     * Nutze "refresh" um die Matrix auf dem Bildschirm zu zeigen.
+     * @param im ist eine Matrix.
+     * @param xpos ist die Position in x-Richtung.
+     * @param ypos ist die Position in y-Richtung.
      */
     //% block="write matrix double %im|x %xpos|y %ypos"
     //% block.loc.de="schreibe Matrix verdoppelt %im|x %xpos|y %ypos"
@@ -599,10 +605,11 @@ export function drawsegment (seg:string, pos: number) {
     }
   }
   /**
-     * Using the X Y co-ordinates, it is possible to turn on a selected pixel in the buffer. Use refresh to show buffer on display
-     * @param x is X alis, eg: 0
-     * @param y is Y alis, eg: 0
-     * @param screen is screen selection when using multiple screens
+     * Mithilfe von x- und y-Koordinaten wird ein ausgewählter Pixel im Zwischenspeicher verändert.
+     * Nutze refresh um den Zwischenspeicher zu zeichnen.
+     * @param x ist die x-Koordinate.
+     * @param y ist die y-Koordinate.
+     * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% blockId="VIEW128x64_set_pixelbuffer" block="write pixel in buffer at x %x|y %y"
     //% block.loc.de="schreibe Pixel in Puffer an x %x|y %y"
@@ -611,7 +618,7 @@ export function drawsegment (seg:string, pos: number) {
     //% x.min=0, x.max=127
     //% y.min=0, y.max=63
     //% inlineInputMode=inline
-    //% subcategory=advanced
+    //% subcategory=Weitere
     export function setPixelbuffer(x: number, y: number, screen?: 1) {
         displayAddress = setScreenAddr(screen)
         if (initalised == 0){
@@ -626,10 +633,10 @@ export function drawsegment (seg:string, pos: number) {
     }
 
     /**
-     * Using the X Y co-ordinates, it is possible to turn on a selected pixel on the display
-     * @param x is X alis, eg: 0
-     * @param y is Y alis, eg: 0
-     * @param screen is screen selection when using multiple screens
+     * Mithilfe von x- und y-Koordinaten wird ein ausgewählter Pixel auf dem Bildschirm verändert.
+     * @param x ist die x-Koordinate.
+     * @param y ist die y-Koordinate.
+     * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% blockId="VIEW128x64_set_pixel" block="show pixel at x %x|y %y"
     //% block.loc.de="zeige Pixel an x %x|y %y"
@@ -656,10 +663,10 @@ export function drawsegment (seg:string, pos: number) {
     }
 
     /**
-     * Using the X Y co-ordinates, it is possible to turn off a selected pixel on the display
-     * @param x is X alis, eg: 0
-     * @param y is Y alis, eg: 0
-     * @param screen is screen selection when using multiple screens
+     * Mithilfe von x- und y-Koordinaten wird ein ausgewählter Pixel auf dem Bildschirm ausgeschaltet.
+     * @param x ist die x-Koordinate.
+     * @param y ist die y-Koordinate.
+     * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% blockId="VIEW128x64_clear_pixel" block="clear pixel at x %x|y %y"
     //% block.loc.de="lösche Pixel an x %x|y %y"
@@ -687,12 +694,12 @@ export function drawsegment (seg:string, pos: number) {
 
 // function should be updated, soon
     /**
-     * show will allow any number, string or variable to be displayed onto the screen.
-     * Block is expandable to set line and alignment
-     * @param displayShowAlign is the alignment of the text, this can be left, centre or right
-     * @param line is line the text to be started on, eg: 1
-     * @param inputData is the text will be show
-     * @param screen is screen selection when using multiple screens
+     * erlaubt es eine beliebige Zahlen, strings oder Variablen auf dem Bildschirm anzuzeigen.
+     * Der Block ist erweiterbar um die Zeile und Ausrichtung anzugeben.
+     * @param displayShowAlign ist die Textausrichtung, das kann left, centre oder right sein.
+     * @param line ist die Zeile, in der der Text starten soll.
+     * @param inputData ist das, was angezeigt werden soll.
+     * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% blockId="VIEW128x64_show" block="show %s|| on line %line| with alignment: %displayShowAlign"
     //% block.loc.de="zeige %s|| an Zeile %line| mit Ausrichtung: %displayShowAlign"
@@ -828,12 +835,12 @@ export function drawsegment (seg:string, pos: number) {
     }
  
     /**
-     * draw a line using the x and y co-ordinates as a starting point to a given length
-     * @param lineDirection is the selection of either horizontal line, vertical line or diaganol
-     * @param x is start position on the X axis, eg: 0
-     * @param y is start position on the Y axis, eg: 0
-     * @param len is the length of line, length is the number of pixels, eg: 10
-     * @param screen is screen selection when using multiple screens
+     * Zeichne eine Linie mit einem Startpunkt und fester Länge.
+     * @param lineDirection wählt aus, in welche Richtung die Linie geht. Werte: horizontal oder vertical.
+     * @param x ist die x-Koordinate.
+     * @param y ist die y-Koordinate.
+     * @param len ist die Länge der Linie in Pixeln.
+     * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% blockId="VIEW128x64_draw_line" block="draw a %lineDirection | line with length of %len starting at x %x|y %y"
     //% block.loc.de="zeichne eine %lineDirection | Linie mit Länge %len beginnend an x %x|y %y"
@@ -858,12 +865,12 @@ export function drawsegment (seg:string, pos: number) {
     }
 
     /**
-     * Draw a rectangle using the X and Y coordinates as a starting point, then the width and height can be enter as the number of pixels
-     * @param width is width of the rectangle, eg: 60
-     * @param height is height of the rectangle, eg: 30
-     * @param x is the start position on the X axis, eg: 0
-     * @param y is the start position on the Y axis, eg: 0
-     * @param screen is screen selection when using multiple screens
+     * Zeichne ein Rechteck mit einem Startpunkt und der Breite und Höhe in Pixeln.
+     * @param width ist die Breite des Rechtecks in Pixeln.
+     * @param height st die Höhe des Rechtecks in Pixeln.
+     * @param x ist die x-Koordinate.
+     * @param y ist die y-Koordinate.
+     * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% blockId="VIEW128x64_draw_rect" block="draw a rectangle %width|wide %height|high from position x %x|y %y"
     //% block.loc.de="zeichne ein Rechteck mit Breite %width|und Höhe %height| von Position x %x|y %y"
@@ -888,8 +895,8 @@ export function drawsegment (seg:string, pos: number) {
     }
 
     /**
-     * clear screen
-     * @param screen is screen selection when using multiple screens
+     * Lösche Display
+     * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% blockId="VIEW128x64_clear" block="clear display"
     //% block.loc.de="lösche Display"
@@ -908,12 +915,12 @@ export function drawsegment (seg:string, pos: number) {
     }
  
    /**
-     * clears the screenbuffer. Refresh display to see changes!
+     * Löscht den Zwischenspeicher. Nutze Refresh um die Änderung zu sehen!
      */
     //% blockId="VIEW128x64_clearbuffer" block="clear buffer"
-    //% block.loc.de="lösche Puffer"
+    //% block.loc.de="lösche Zwischenspeicher"
     //% group="Lösche"
-    //% subcategory=advanced
+    //% subcategory=Weitere
     //% weight=63 blockGap=8
     export function clearbuffer() {
         screenBuf.fill(0)       //fill the screenBuf with 0
@@ -924,14 +931,14 @@ export function drawsegment (seg:string, pos: number) {
 
     /**
      * Schalte den Bildschirm an und aus. Die Informationen auf den Bildschirm bleiben beim Ein- und Ausschalten erhalten
-     * @param output is the boolean output of the pin, either ON or OFF
-     * @param screen is screen selection when using multiple screens
+     * @param displayOutput ist boolean, also entweder true oder false.
+     * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% blockId=VIEW128x64_display_on_off_control
     //% block="turn %displayOutput=on_off_toggle| display"
     //% block.loc.de="schalte Display %displayOutput=on_off_toggle"
     //% group="Kontrolle"
-    //% subcategory=advanced
+    //% subcategory=Weitere
     //% expandableArgumentMode="toggle"
     //% weight=80 blockGap=8
     export function controlDisplayOnOff(displayOutput: boolean, screen?: 1) {
@@ -967,9 +974,9 @@ export function drawsegment (seg:string, pos: number) {
     //////////////////////////////////////
 
     /**
-     * Plot Request start or stops the plotting of the graph onto the display
-     * @plotVariable is the variable that the user requires to be recorded on a graph onto the display
-     * @param screen is screen selection when using multiple screens
+     * Starte oder stoppe das poltten eines Graphen auf dem Bildschirm.
+     * @plotVariable ist die Variable die als Graph gezeichnet werden soll
+     * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% blockId="VIEW128x64_plot_request"
     //% group="Zeichne"
@@ -1055,8 +1062,8 @@ export function drawsegment (seg:string, pos: number) {
     //////////////////////////////////////
 
     /**
-     * Block will update or efresh the screen if any data has been changed
-     * @param screen is screen selection when using multiple screens
+     * Aktuellen Zwischenspeicher auf den Bildschrim übernehmen (Refresh)
+     * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% subcategory=paint
     //% blockId="VIEW128x64_draw" block="refresh display"
@@ -1073,10 +1080,10 @@ export function drawsegment (seg:string, pos: number) {
     }
 
     /**
-     * invert display
-     * @param output toggles between inverting the colours of the display
+     * Bidlschrirm invertieren
+     * @param output ist boolean und schaltet das invertieren an oder aus.
      */
-    //% subcategory=advanced
+    //% subcategory=Weitere
     //% group="Kontrolle"
     //% blockId="VIEW128x64_invert_screen" block="inverted display %output=on_off_toggle"
     //% block.loc.de="invertiere Display %output=on_off_toggle"
