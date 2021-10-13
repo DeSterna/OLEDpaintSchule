@@ -556,6 +556,7 @@ namespace oled {
     //% imageLiteralColumns=6
     //% imageLiteralRows=24
     //% shim=images::createImage
+    //% subcategory=paint
     export function matrix6x24(i: string): Image {
         const im = <Image><any>i;
         return im
@@ -571,6 +572,7 @@ namespace oled {
     //% imageLiteralRows=6
     //% shim=images::createImage
     //% weight=90
+    //% subcategory=paint
     export function matrix22x6(i: string): Image {
         const im = <Image><any>i;
         return im
