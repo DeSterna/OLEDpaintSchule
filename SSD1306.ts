@@ -321,8 +321,12 @@ namespace oled {
     `)
 
 
+    /**
+     * Schreibt eine 7-Segment-Zahl auf den Bildschirm.
+     * @param num ist die anzuzeigende Zahl
+     */
    //% blockId=showNumber block="show 7-segment number %num"
-   //% block.loc.de="zeige 7-Segment Zahl %num"
+   //% block.loc.de="zeige 7-Segment-Zahl %num"
    //% group="Zeige"
    //% weight=91
     export function showNumber (num:number) {
@@ -349,42 +353,52 @@ namespace oled {
         oled.refresh() //Puffer anzeigen
     }
 
-//% blockId=drawSegment block="paint segment %seg at position %pos"
-//% block.loc.de="zeichne Segment %seg an Position %pos"
-//% subcategory=Weitere
-export function drawsegment (seg:string, pos: number) {
+    /**
+    * Schreibt ein bestimmtes Segment einer 7-Segment-Zahl auf den Bildschirm.
+    * @param seg ist das ausgewählte Segment. Mögliche Eingaben: A, B, C, D, E, F, G
+    * @param pos ist die Position auf dem Bildschirm in Pixeln. 
+    */
+    //% blockId=drawSegment block="paint segment %seg at position %pos"
+    //% block.loc.de="zeichne Segment %seg an Position %pos"
+    //% subcategory=Weitere
+    export function drawsegment (seg:string, pos: number) {
         switch (seg) {
             case "A": {
-             oled.writeImageOLED(quer, pos+4, 0)
+             oled.writeImage(quer, pos+4, 0)
              break
             }
             case "F": {
-             oled.writeImageOLED(hoch, pos, 4)
+             oled.writeImage(hoch, pos, 4)
              break
             }
             case "E": {
-            oled.writeImageOLED(hoch, pos, 29)
+            oled.writeImage(hoch, pos, 29)
             break
             }
             case "G": {
-            oled.writeImageOLED(quer, pos+4, 25)
+            oled.writeImage(quer, pos+4, 25)
             break
             }
             case "B": {
-            oled.writeImageOLED(hoch, pos+24, 4)
+            oled.writeImage(hoch, pos+24, 4)
             break
             }
             case "C": {
-            oled.writeImageOLED(hoch, pos+24, 29)
+            oled.writeImage(hoch, pos+24, 29)
             break
             }
             case "D": {
-            oled.writeImageOLED(quer, pos+4, 50)
+            oled.writeImage(quer, pos+4, 50)
             break
             }
         }
     }
 
+    /**
+    * Schreibt eine bestimmte Ziffer als 7-Segment-Zahl auf den Bildschirm.
+    * @param num ist die Ziffer. (0,...,9)
+    * @param pos ist die Position auf dem Bildschirm in Pixeln. 
+    */
     //% blockId=drawnum block="paint number %num at position %pos"
     //% block.loc.de="zeichne Ziffer %num an Position %pos"
     //% subcategory=Weitere
@@ -492,15 +506,19 @@ export function drawsegment (seg:string, pos: number) {
 
     //% blockId=OLEDstring block="%s"
     //% group=Zeige weight=60
-    export function OLEDstring(s: string): string {
+    export function oString(s: string): string {
         return s;
     }
     //% blockId=OLEDnumber block="%n"
     //% group=Zeige
-    export function OLEDnumber(n: number): number {
+    export function oNumber(n: number): number {
         return n;
     }
 
+    /**
+    * Erstellt Bild (Matrix) in 16x16 Pixeln. Eingabe: # für Pixel an, . für Pixel aus
+    * @param i ist ein String, der das Bild angibt. Eingabe: # für Pixel an, . für Pixel aus. Am besten mit Umbrüchen passend zu den Dimensionen eingeben!
+    */
     //% block="Bild16x16"
     //% imageLiteral=1
     //% imageLiteralColumns=16
@@ -513,6 +531,10 @@ export function drawsegment (seg:string, pos: number) {
         return im
     }
 
+    /**
+    * Erstellt Bild (Matrix) in 8x8 Pixeln. Eingabe: # für Pixel an, . für Pixel aus
+    * @param i ist ein String, der das Bild angibt. Eingabe: # für Pixel an, . für Pixel aus. Am besten mit Umbrüchen passend zu den Dimensionen eingeben!
+    */
     //% block="Bild8x8"
     //% imageLiteral=1
     //% imageLiteralColumns=8
@@ -525,6 +547,11 @@ export function drawsegment (seg:string, pos: number) {
         return im
     }
  
+    /**
+    * Erstellt Bild (Matrix) in 6x24 Pixeln. Eingabe: # für Pixel an, . für Pixel aus
+    * @param i ist ein String, der das Bild angibt. Eingabe: # für Pixel an, . für Pixel aus. Am besten mit Umbrüchen passend zu den Dimensionen eingeben!
+    */
+    //% block="Bild6x24"
     //% imageLiteral=1
     //% imageLiteralColumns=6
     //% imageLiteralRows=24
@@ -534,6 +561,11 @@ export function drawsegment (seg:string, pos: number) {
         return im
     }
  
+    /**
+    * Erstellt Bild (Matrix) in 22x6 Pixeln. Eingabe: # für Pixel an, . für Pixel aus
+    * @param i ist ein String, der das Bild angibt. Eingabe: # für Pixel an, . für Pixel aus. Am besten mit Umbrüchen passend zu den Dimensionen eingeben!
+    */
+    //% block="Bild22x6"
     //% imageLiteral=1
     //% imageLiteralColumns=22
     //% imageLiteralRows=6
@@ -559,7 +591,7 @@ export function drawsegment (seg:string, pos: number) {
     /**
      * Schreibt eine Matrix in den Zwischenspeicher.
      * Nutze "refresh" um die Matrix auf dem Bildschirm zu zeigen.
-     * @param im ist eine Matrix.
+     * @param im ist eine Bild (als Matrix).
      * @param xpos ist die Position in x-Richtung.
      * @param ypos ist die Position in y-Richtung.
      */
@@ -567,7 +599,7 @@ export function drawsegment (seg:string, pos: number) {
     //% block.loc.de="schreibe Matrix %im|x %xpos|y %ypos"
     //% weight=65
     //% subcategory=paint
-    export function writeImageOLED (im: Image, xpos:number, ypos:number) {
+    export function writeImage (im: Image, xpos:number, ypos:number) {
     for (let y = 0; y <= im.height() - 1; y++) {
         for (let x = 0; x <= im.width() - 1; x++) {
             if ((im.pixel(x, y) ? 1 : 0)) {
@@ -975,7 +1007,7 @@ export function drawsegment (seg:string, pos: number) {
 
     /**
      * Starte oder stoppe das poltten eines Graphen auf dem Bildschirm.
-     * @plotVariable ist die Variable die als Graph gezeichnet werden soll
+     * @param plotVariable ist die Variable die als Graph gezeichnet werden soll
      * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% blockId="VIEW128x64_plot_request"
@@ -1080,8 +1112,9 @@ export function drawsegment (seg:string, pos: number) {
     }
 
     /**
-     * Bidlschrirm invertieren
+     * Bildschrirm invertieren
      * @param output ist boolean und schaltet das invertieren an oder aus.
+     * @param screen Bei Nutzung mehrer Bildschirme kann ist dies die Bildschirmauswahl.
      */
     //% subcategory=Weitere
     //% group="Kontrolle"
