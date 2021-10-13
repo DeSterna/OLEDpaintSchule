@@ -3,9 +3,9 @@
  * LCD chip SSD1306
  * angepasst an Calliope mini und erweitert von M.Klein 6.5.21-12.5.21
  **/
-//% weight=100 color=#00A654 icon="\uf26c" block="128x64 Display"
-//% groups='["Control", "Show", "Draw", "Delete"]'
-namespace kitronik_VIEW128x64 {
+//% weight=100 color=#ffca00 icon="\uf26c" block="128x64 Display"
+//% groups='["Kontrolle", "Zeige", "Zeichne", "Lösche"]'
+namespace oled {
     let font: number[] = [];
     font[0] = 0x0022d422;
     font[1] = 0x0022d422;
@@ -286,7 +286,7 @@ namespace kitronik_VIEW128x64 {
         }
     }
 
-    let quer = kitronik_VIEW128x64.matrix22x6(`
+    let quer = oled.matrix22x6(`
         . . # # # # # # # # # # # # # # # # # # . .
         . # # # # # # # # # # # # # # # # # # # # .
         # # # # # # # # # # # # # # # # # # # # # #
@@ -294,7 +294,7 @@ namespace kitronik_VIEW128x64 {
         . # # # # # # # # # # # # # # # # # # # # .
         . . # # # # # # # # # # # # # # # # # # . .
         `)
-    let hoch = kitronik_VIEW128x64.matrix6x24(`
+    let hoch = oled.matrix6x24(`
     . . # # . .
     . # # # # .
     # # # # # #
@@ -323,7 +323,7 @@ namespace kitronik_VIEW128x64 {
 
    //% blockId=zeigeZahl block="show 7-segment number %num"
    //% block.loc.de="zeige 7-Segment Zahl %num"
-   //% group="Show"
+   //% group="Zeige"
    //% weight=91
     export function zeigeZahl (num:number) {
         let zahlAlsText = ""
@@ -333,20 +333,20 @@ namespace kitronik_VIEW128x64 {
         if (num < 10000 && num >= 0) {
             zahlAlsText = convertToText(num)
             for (let Index = 0; Index <= zahlAlsText.length - 1; Index++) {
-            kitronik_VIEW128x64.drawnum(parseFloat(zahlAlsText.substr(Index, 1)),Index+4-zahlAlsText.length)
+            oled.drawnum(parseFloat(zahlAlsText.substr(Index, 1)),Index+4-zahlAlsText.length)
             }
         } else { //Errormessage
-	        kitronik_VIEW128x64.drawsegment("A", 0)
-    	    kitronik_VIEW128x64.drawsegment("D", 0)
- 		    kitronik_VIEW128x64.drawsegment("E", 0)
-         	kitronik_VIEW128x64.drawsegment("F", 0)
-            kitronik_VIEW128x64.drawsegment("G", 0)
-            kitronik_VIEW128x64.drawsegment("E", 32)
-    	    kitronik_VIEW128x64.drawsegment("G", 32)
-            kitronik_VIEW128x64.drawsegment("E", 64)
-    	    kitronik_VIEW128x64.drawsegment("G", 64)
+	        oled.drawsegment("A", 0)
+    	    oled.drawsegment("D", 0)
+ 		    oled.drawsegment("E", 0)
+         	oled.drawsegment("F", 0)
+            oled.drawsegment("G", 0)
+            oled.drawsegment("E", 32)
+    	    oled.drawsegment("G", 32)
+            oled.drawsegment("E", 64)
+    	    oled.drawsegment("G", 64)
         }
-        kitronik_VIEW128x64.refresh() //Puffer anzeigen
+        oled.refresh() //Puffer anzeigen
     }
 
 //% blockId=drawSegment block="paint segment %seg at position %pos"
@@ -355,31 +355,31 @@ namespace kitronik_VIEW128x64 {
 export function drawsegment (seg:string, pos: number) {
         switch (seg) {
             case "A": {
-             kitronik_VIEW128x64.writeImageOLED(quer, pos+4, 0)
+             oled.writeImageOLED(quer, pos+4, 0)
              break
             }
             case "F": {
-             kitronik_VIEW128x64.writeImageOLED(hoch, pos, 4)
+             oled.writeImageOLED(hoch, pos, 4)
              break
             }
             case "E": {
-            kitronik_VIEW128x64.writeImageOLED(hoch, pos, 29)
+            oled.writeImageOLED(hoch, pos, 29)
             break
             }
             case "G": {
-            kitronik_VIEW128x64.writeImageOLED(quer, pos+4, 25)
+            oled.writeImageOLED(quer, pos+4, 25)
             break
             }
             case "B": {
-            kitronik_VIEW128x64.writeImageOLED(hoch, pos+24, 4)
+            oled.writeImageOLED(hoch, pos+24, 4)
             break
             }
             case "C": {
-            kitronik_VIEW128x64.writeImageOLED(hoch, pos+24, 29)
+            oled.writeImageOLED(hoch, pos+24, 29)
             break
             }
             case "D": {
-            kitronik_VIEW128x64.writeImageOLED(quer, pos+4, 50)
+            oled.writeImageOLED(quer, pos+4, 50)
             break
             }
         }
@@ -409,94 +409,94 @@ export function drawsegment (seg:string, pos: number) {
         }
         switch (num) {
             case 0: {
-             kitronik_VIEW128x64.drawsegment("A", pos)
-             kitronik_VIEW128x64.drawsegment("B", pos)
-             kitronik_VIEW128x64.drawsegment("C", pos)
-             kitronik_VIEW128x64.drawsegment("D", pos)
-             kitronik_VIEW128x64.drawsegment("E", pos)
-             kitronik_VIEW128x64.drawsegment("F", pos)
+             oled.drawsegment("A", pos)
+             oled.drawsegment("B", pos)
+             oled.drawsegment("C", pos)
+             oled.drawsegment("D", pos)
+             oled.drawsegment("E", pos)
+             oled.drawsegment("F", pos)
              break
             }
             case 1: {
-             kitronik_VIEW128x64.drawsegment("B", pos)
-             kitronik_VIEW128x64.drawsegment("C", pos)
+             oled.drawsegment("B", pos)
+             oled.drawsegment("C", pos)
              break
             }
             case 2: {
-             kitronik_VIEW128x64.drawsegment("A", pos)
-             kitronik_VIEW128x64.drawsegment("B", pos)
-             kitronik_VIEW128x64.drawsegment("G", pos)
-             kitronik_VIEW128x64.drawsegment("E", pos)
-             kitronik_VIEW128x64.drawsegment("D", pos)
+             oled.drawsegment("A", pos)
+             oled.drawsegment("B", pos)
+             oled.drawsegment("G", pos)
+             oled.drawsegment("E", pos)
+             oled.drawsegment("D", pos)
              break
             }
             case 3: {
-             kitronik_VIEW128x64.drawsegment("A", pos)
-             kitronik_VIEW128x64.drawsegment("B", pos)
-             kitronik_VIEW128x64.drawsegment("C", pos)
-             kitronik_VIEW128x64.drawsegment("D", pos)
-             kitronik_VIEW128x64.drawsegment("G", pos)
+             oled.drawsegment("A", pos)
+             oled.drawsegment("B", pos)
+             oled.drawsegment("C", pos)
+             oled.drawsegment("D", pos)
+             oled.drawsegment("G", pos)
              break
             }
             case 4: {
-             kitronik_VIEW128x64.drawsegment("B", pos)
-             kitronik_VIEW128x64.drawsegment("C", pos)
-             kitronik_VIEW128x64.drawsegment("F", pos)
-             kitronik_VIEW128x64.drawsegment("G", pos)
+             oled.drawsegment("B", pos)
+             oled.drawsegment("C", pos)
+             oled.drawsegment("F", pos)
+             oled.drawsegment("G", pos)
              break
             }
             case 5: {
-             kitronik_VIEW128x64.drawsegment("A", pos)
-             kitronik_VIEW128x64.drawsegment("C", pos)
-             kitronik_VIEW128x64.drawsegment("D", pos)
-             kitronik_VIEW128x64.drawsegment("F", pos)
-             kitronik_VIEW128x64.drawsegment("G", pos)
+             oled.drawsegment("A", pos)
+             oled.drawsegment("C", pos)
+             oled.drawsegment("D", pos)
+             oled.drawsegment("F", pos)
+             oled.drawsegment("G", pos)
              break
             }
             case 6: {
-             kitronik_VIEW128x64.drawsegment("A", pos)
-             kitronik_VIEW128x64.drawsegment("C", pos)
-             kitronik_VIEW128x64.drawsegment("D", pos)
-             kitronik_VIEW128x64.drawsegment("E", pos)
-             kitronik_VIEW128x64.drawsegment("F", pos)
-             kitronik_VIEW128x64.drawsegment("G", pos)
+             oled.drawsegment("A", pos)
+             oled.drawsegment("C", pos)
+             oled.drawsegment("D", pos)
+             oled.drawsegment("E", pos)
+             oled.drawsegment("F", pos)
+             oled.drawsegment("G", pos)
              break
             }
             case 7: {
-             kitronik_VIEW128x64.drawsegment("A", pos)
-             kitronik_VIEW128x64.drawsegment("B", pos)
-             kitronik_VIEW128x64.drawsegment("C", pos)
+             oled.drawsegment("A", pos)
+             oled.drawsegment("B", pos)
+             oled.drawsegment("C", pos)
              break
             }
             case 8: {
-             kitronik_VIEW128x64.drawsegment("A", pos)
-             kitronik_VIEW128x64.drawsegment("B", pos)
-             kitronik_VIEW128x64.drawsegment("C", pos)
-             kitronik_VIEW128x64.drawsegment("D", pos)
-             kitronik_VIEW128x64.drawsegment("E", pos)
-             kitronik_VIEW128x64.drawsegment("F", pos)
-             kitronik_VIEW128x64.drawsegment("G", pos)
+             oled.drawsegment("A", pos)
+             oled.drawsegment("B", pos)
+             oled.drawsegment("C", pos)
+             oled.drawsegment("D", pos)
+             oled.drawsegment("E", pos)
+             oled.drawsegment("F", pos)
+             oled.drawsegment("G", pos)
              break
             }
             case 9: {
-             kitronik_VIEW128x64.drawsegment("A", pos)
-             kitronik_VIEW128x64.drawsegment("B", pos)
-             kitronik_VIEW128x64.drawsegment("C", pos)
-             kitronik_VIEW128x64.drawsegment("D", pos)
-             kitronik_VIEW128x64.drawsegment("F", pos)
-             kitronik_VIEW128x64.drawsegment("G", pos)
+             oled.drawsegment("A", pos)
+             oled.drawsegment("B", pos)
+             oled.drawsegment("C", pos)
+             oled.drawsegment("D", pos)
+             oled.drawsegment("F", pos)
+             oled.drawsegment("G", pos)
              break
             }
         }
     }
 
     //% blockId=OLEDstring block="%s"
-    //% group=Show weight=60
+    //% group=Zeige weight=60
     export function OLEDstring(s: string): string {
         return s;
     }
     //% blockId=OLEDnumber block="%n"
-    //% group=Show
+    //% group=Zeige
     export function OLEDnumber(n: number): number {
         return n;
     }
@@ -606,7 +606,7 @@ export function drawsegment (seg:string, pos: number) {
      */
     //% blockId="VIEW128x64_set_pixelbuffer" block="write pixel in buffer at x %x|y %y"
     //% block.loc.de="schreibe Pixel in Puffer an x %x|y %y"
-    //% group="Show"
+    //% group="Zeige"
     //% weight=70 blockGap=8
     //% x.min=0, x.max=127
     //% y.min=0, y.max=63
@@ -633,7 +633,7 @@ export function drawsegment (seg:string, pos: number) {
      */
     //% blockId="VIEW128x64_set_pixel" block="show pixel at x %x|y %y"
     //% block.loc.de="zeige Pixel an x %x|y %y"
-    //% group="Draw"
+    //% group="Zeichne"
     //% weight=70 blockGap=8
     //% x.min=0, x.max=127
     //% y.min=0, y.max=63
@@ -663,7 +663,7 @@ export function drawsegment (seg:string, pos: number) {
      */
     //% blockId="VIEW128x64_clear_pixel" block="clear pixel at x %x|y %y"
     //% block.loc.de="lösche Pixel an x %x|y %y"
-    //% group="Delete"
+    //% group="Lösche"
     //% weight=70 blockGap=8
     //% x.min=0, x.max=127
     //% y.min=0, y.max=63
@@ -697,7 +697,7 @@ export function drawsegment (seg:string, pos: number) {
     //% blockId="VIEW128x64_show" block="show %s|| on line %line| with alignment: %displayShowAlign"
     //% block.loc.de="zeige %s|| an Zeile %line| mit Ausrichtung: %displayShowAlign"
     //% weight=80 blockGap=8
-    //% group="Show"
+    //% group="Zeige"
     //% expandableArgumentMode="enable"
     //% inlineInputMode=inline
     //% line.min=1 line.max=8
@@ -838,7 +838,7 @@ export function drawsegment (seg:string, pos: number) {
     //% blockId="VIEW128x64_draw_line" block="draw a %lineDirection | line with length of %len starting at x %x|y %y"
     //% block.loc.de="zeichne eine %lineDirection | Linie mit Länge %len beginnend an x %x|y %y"
     //% weight=72 blockGap=8
-    //% group="Draw"
+    //% group="Zeichne"
     //% x.min=0, x.max=127
     //% y.min=0, y.max=63
     //% len.min=1, len.max=127
@@ -868,7 +868,7 @@ export function drawsegment (seg:string, pos: number) {
     //% blockId="VIEW128x64_draw_rect" block="draw a rectangle %width|wide %height|high from position x %x|y %y"
     //% block.loc.de="zeichne ein Rechteck mit Breite %width|und Höhe %height| von Position x %x|y %y"
     //% weight=71 blockGap=8
-    //% group="Draw"
+    //% group="Zeichne"
     //% inlineInputMode=inline
     //% width.min=1 width.max=127
     //% height.min=1 height.max=63
@@ -893,7 +893,7 @@ export function drawsegment (seg:string, pos: number) {
      */
     //% blockId="VIEW128x64_clear" block="clear display"
     //% block.loc.de="lösche Display"
-    //% group="Delete"
+    //% group="Lösche"
     //% weight=63 blockGap=8
     export function clear(screen?: number) {
         displayAddress = setScreenAddr(screen)
@@ -912,7 +912,7 @@ export function drawsegment (seg:string, pos: number) {
      */
     //% blockId="VIEW128x64_clearbuffer" block="clear buffer"
     //% block.loc.de="lösche Puffer"
-    //% group="Delete"
+    //% group="Lösche"
     //% subcategory=advanced
     //% weight=63 blockGap=8
     export function clearbuffer() {
@@ -930,7 +930,7 @@ export function drawsegment (seg:string, pos: number) {
     //% blockId=VIEW128x64_display_on_off_control
     //% block="turn %displayOutput=on_off_toggle| display"
     //% block.loc.de="schalte Display %displayOutput=on_off_toggle"
-    //% group="Control"
+    //% group="Kontrolle"
     //% subcategory=advanced
     //% expandableArgumentMode="toggle"
     //% weight=80 blockGap=8
@@ -972,7 +972,7 @@ export function drawsegment (seg:string, pos: number) {
      * @param screen is screen selection when using multiple screens
      */
     //% blockId="VIEW128x64_plot_request"
-    //% group="Draw"
+    //% group="Zeichne"
     //% block="plot %plotVariable| onto display"
     //% block.loc.de="plotte %plotVariable| auf Display"
     //% weight=100 blockGap=8
@@ -1077,7 +1077,7 @@ export function drawsegment (seg:string, pos: number) {
      * @param output toggles between inverting the colours of the display
      */
     //% subcategory=advanced
-    //% group="Control"
+    //% group="Kontrolle"
     //% blockId="VIEW128x64_invert_screen" block="inverted display %output=on_off_toggle"
     //% block.loc.de="invertiere Display %output=on_off_toggle"
     //% weight=62 blockGap=8
